@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js Local Docker Postgres setup
 
-## Getting Started
+This is a quick Next.js site to test the Local Docker with Vercel Postgres support. The [doc Vercel offers](https://vercel.com/docs/storage/vercel-postgres/local-development#local-development-with-vercel-postgres) is no longer up to date and the connection never works. This is due to the `@drizzle-orm` and `@vercel/postgres` uses different version of `@neondatabase/serverless` causes this. The only possible fix for now is to override the `@neondatabase/serverless` through `package.json`.
 
-First, run the development server:
+For `npm` user:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```json
+"overrides": {
+  "@neondatabase/serverless": "0.10.4"
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+For `pnpm` user:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```json
+"pnpm": {
+  "overrides": {
+    "@neondatabase/serverless": "^0.10.4"
+  }
+}
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+`package-lock.json` or `pnpm-lock.yaml` needs to be remove and rebuild as well as the `node_modules`.
 
-## Learn More
+## Resource
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Vercel GitHub issue](https://github.com/vercel/storage/issues/123#issuecomment-2500543485)
+- [Initial explanation](https://github.com/vercel/storage/issues/123#issuecomment-2500543485)
+- [Detailed blogpost](https://gal.hagever.com/posts/running-vercel-postgres-locally)
+- [Vercel blogpost](https://vercel.com/docs/storage/vercel-postgres/local-development#local-development-with-vercel-postgres)
